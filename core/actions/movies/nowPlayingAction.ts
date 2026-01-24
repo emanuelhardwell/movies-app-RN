@@ -8,7 +8,7 @@ export const nowPlayingAction = async () => {
     const movies = res.data.results.map((movie) =>
       MovieMapper.fromMovieDBtoMovie(movie)
     );
-    console.log(movies);
+    return movies;
   } catch (error) {
     console.log(error);
   }
