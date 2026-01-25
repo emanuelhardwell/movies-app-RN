@@ -1,17 +1,26 @@
 import { nowPlayingAction } from "@/core/actions/movies/nowPlayingAction";
-import { popularAction } from "@/core/actions/movies/popularAction";
 import { useQuery } from "@tanstack/react-query";
 
 export const useMovies = () => {
   const nowPlayingQuery = useQuery({
     queryKey: ["movies", "nowPlaying"],
-    queryFn: () => nowPlayingAction(),
+    queryFn: () => nowPlayingAction("/now_playing"),
   });
 
   const popularQuery = useQuery({
     queryKey: ["movies", "popular"],
-    queryFn: () => popularAction(),
+    queryFn: () => nowPlayingAction("/popular"),
   });
 
-  return { nowPlayingQuery, popularQuery };
+  const topRatedQuery = useQuery({
+    queryKey: ["movies", "topRated"],
+    queryFn: () => nowPlayingAction("/top_rated"),
+  });
+
+  const upcomingQuery = useQuery({
+    queryKey: ["movies", "upcoming"],
+    queryFn: () => nowPlayingAction("/upcoming"),
+  });
+
+  return { nowPlayingQuery, popularQuery, topRatedQuery, upcomingQuery };
 };
