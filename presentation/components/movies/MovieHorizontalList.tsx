@@ -10,7 +10,7 @@ interface MovieHorizontalListProps {
 
 const MovieHorizontalList = ({ title, movies }: MovieHorizontalListProps) => {
   return (
-    <View>
+    <View className="mb-3">
       {title && <Text className="text-2xl px-3 mb-2">{title}</Text>}
       <FlatList
         data={movies}
