@@ -22,7 +22,11 @@ const HomeScreen = () => {
       <View className="mt-2 pb-6" style={{ paddingTop: safeArea.top }}>
         <Text className="text-3xl px-3 mb-2">Movies App</Text>
         <MainSlideShow movies={nowPlayingQuery.data ?? []} />
-        <MovieHorizontalList title="Popular" movies={popularQuery.data ?? []} />
+        <MovieHorizontalList
+          title="Popular"
+          movies={popularQuery.data?.pages.flatMap((page) => page ?? []) ?? []}
+          loadNextPage={popularQuery.fetchNextPage}
+        />
         <MovieHorizontalList
           title="Mejor calificadas"
           movies={topRatedQuery.data ?? []}
