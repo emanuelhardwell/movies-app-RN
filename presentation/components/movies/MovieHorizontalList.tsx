@@ -1,5 +1,5 @@
 import { Movie } from "@/infrastructure/interfaces/Movie";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   FlatList,
   NativeScrollEvent,
@@ -12,10 +12,21 @@ import MoviePoster from "./MoviePoster";
 interface MovieHorizontalListProps {
   title?: string;
   movies: Movie[];
+  loadNextPage?: () => void;
 }
 
-const MovieHorizontalList = ({ title, movies }: MovieHorizontalListProps) => {
+const MovieHorizontalList = ({
+  title,
+  movies,
+  loadNextPage,
+}: MovieHorizontalListProps) => {
   const isLoading = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      isLoading.current = false;
+    }, 200);
+  }, [movies]);
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (isLoading.current) return;
@@ -26,13 +37,14 @@ const MovieHorizontalList = ({ title, movies }: MovieHorizontalListProps) => {
     console.log("contentSize; ", contentSize); */
 
     const add = contentOffset.x + layoutMeasurement.width + 600;
-    console.log("add; ", add);
+    /* console.log("add; ", add); */
 
     const isEndReached = add >= contentSize.width;
 
     if (!isEndReached) return;
     isLoading.current = true;
     console.log("Cargar siguinetes peliculas");
+    loadNextPage?.();
   };
   return (
     <View className="mb-3">
